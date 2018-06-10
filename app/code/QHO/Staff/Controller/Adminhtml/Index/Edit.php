@@ -24,11 +24,16 @@ class Edit extends \Magento\Backend\App\Action{
 
 		if ($staffId) {
 			$model->load($staffId);
-			$title 	= "Edit Staff";
+			if(!$model->getId()){
+				$this->messageManager->addError(__("This staff no longer exists"));
+				return $this->_redirect("*/*/");
+			}else{
+				$title 	= "Edit Staff ".$model->getName();
+			}
+
 		}else{
 			$title 	= "Add Staff";
 		}
-
 
 		$resultpage = $this->_resultPageFactory->create();
 		$resultpage->setActiveMenu("QHO_Staff::staff");
